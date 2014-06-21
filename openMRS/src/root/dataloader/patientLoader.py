@@ -40,7 +40,7 @@ def insertScript(tableName, person, idStart) :
     elif(tableName=='person_name'):
         personName = person.name 
         qStr+=str(idStart)+","
-        qStr+="0,"
+        qStr+="1,"
         qStr+=str(idStart)+","
         qStr+="NULL,"
         qStr+="'"+personName.givenName+"',"
@@ -59,10 +59,10 @@ def insertScript(tableName, person, idStart) :
         qStr+="NULL,"
         qStr+="NULL,"
         qStr+="'"+person.uuid+"');"
-
+    
 #Format for personAddress
 #INSERT INTO `person_address` VALUES (82081,82081,1,'592 Tuscan appartment whitemall','Kaiser cross road','Bellevue','Washington','377719','USA','-14.833333333333334','38.2',NULL,NULL,1,'2014-01-21 00:00:00',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'ac7a0d4c-f954-11e3-8303-f0def1eaaa2d');
-		
+    
     elif(tableName=='person_address'):
         personAddress= person.address
         qStr+=str(idStart)+","
@@ -92,7 +92,25 @@ def insertScript(tableName, person, idStart) :
         qStr+="NULL,"
         qStr+="NULL,"
         qStr+="'"+person.uuid+"');"
+
+#Format for patient_identifier   
+#INSERT INTO `patient_identifier` VALUES (99,99,99,2,1,1,1,'2014-06-21 13:28:43', NULL, NULL,0, NULL, NULL, NULL,'8d79403a-c2cc-11de-8d13-0010c6dffd0f')
+   
+    elif(tableName=='patient_identifier'):
+        qStr+=str(idStart)+","
+        qStr+=str(idStart)+","
+        qStr+=str(idStart)+","
+        qStr+="2,"
+        qStr+="1,"
+        qStr+="1,"
+        qStr+="1,"
+        qStr+="'2014-01-21 00:00:00',"
+        qStr+="NULL,"
+        qStr+="NULL,"
+        qStr+="0,"
+        qStr+="NULL,"
+        qStr+="NULL,"
+        qStr+="NULL,"
+        qStr+="'"+person.uuid+"');"
     
     return qStr;
-
-
