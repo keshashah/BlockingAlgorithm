@@ -12,6 +12,12 @@ class BlockingPatient :
     def setYob(self,yob):
         self.yob = yob     
     
+    def setMob(self,mob):
+        self.mob = mob     
+    
+    def setDayob(self,dayob):
+        self.dayob = dayob     
+    
     def setSortedNameList(self,snl):
         self.sortedNameList = snl
     
