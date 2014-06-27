@@ -11,6 +11,9 @@ class BlockingPatient :
         
     def setYob(self,yob):
         self.yob = yob     
-        
+    
+    def setSortedNameList(self,snl):
+        self.sortedNameList = snl
+    
     def __str__(self):
             return(self.uuid + ","+str(self.name)+","+str(self.yob))
