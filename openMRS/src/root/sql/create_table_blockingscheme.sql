@@ -1,0 +1,12 @@
+USE 'openmrs';
+CREATE TABLE `blockingscheme` (
+	`uuid` CHAR(38) NOT NULL,
+	`scheme1` VARCHAR(20) NULL DEFAULT NULL,
+	`scheme2` VARCHAR(20) NULL DEFAULT NULL,
+	`scheme3` VARCHAR(20) NULL DEFAULT NULL,
+	`scheme4` VARCHAR(20) NULL DEFAULT NULL,
+	`scheme5` VARCHAR(20) NULL DEFAULT NULL,
+	PRIMARY KEY (`uuid`)
+)
+COLLATE='latin1_swedish_ci'
+ENGINE=InnoDB;
