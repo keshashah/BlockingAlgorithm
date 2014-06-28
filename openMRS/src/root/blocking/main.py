@@ -18,3 +18,11 @@ blkCol4 = blk.blockingScheme4(blockingPatients)
 
 blkCol5 = blk.blockingScheme5(blockingPatients)
 
+#update the blockingscheme table in the database
+
+blk.insertBlockingSchemeTable("scheme1",blkCol1)
+blk.updateBlockingSchemeTable("scheme2",blkCol2)
+blk.updateBlockingSchemeTable("scheme3",blkCol1)
+blk.updateBlockingSchemeTable("scheme4",blkCol1)
+blk.updateBlockingSchemeTable("scheme5",blkCol1)
+

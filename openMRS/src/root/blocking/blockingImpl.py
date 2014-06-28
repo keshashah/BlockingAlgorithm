@@ -88,4 +88,35 @@ class Blocking:
         return blockingColumn
     
     
+    def insertBlockingSchemeTable(self,schemeName,blockingColumn):
+        import pymysql
+        conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='root', db='openmrs')  # else connect to default mysqldb
+        cur = conn.cursor()
+        
+        for value in blockingColumn:
+            query = "REPLACE INTO blockingscheme (uuid,"+schemeName+") values('"+value+"','"+blockingColumn[value]+"')"
+            cur.execute(query)
+        
+        conn.commit()    
+        cur.close()
+        conn.close()
+        return
+    
+    
+    def updateBlockingSchemeTable(self,schemeName,blockingColumn):
+        import pymysql
+        conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='root', db='openmrs')  # else connect to default mysqldb
+        cur = conn.cursor()
+        
+        for value in blockingColumn:
+            query = "UPDATE blockingscheme set "+schemeName+" = '"+blockingColumn[value]+"' where uuid='"+value+"'"
+            cur.execute(query)
+        
+        conn.commit()    
+        cur.close()
+        conn.close()
+        return
+            
+    
+    
     
