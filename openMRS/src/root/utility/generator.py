@@ -157,7 +157,7 @@ class Generator :
             pos = math.ceil(random.triangular(1,len(str)))
             str = str[:pos] + " " + str[pos:]
             i+=1
-        return str    
+        return str
         
     def getRandomAddress(self,houseNumLimit,address1LenLimit,address2LenLimit,postalCodeStart,postalCodeEnd):
         import random, math

@@ -21,7 +21,7 @@ idStart = 1000
 r = ""
 f = codecs.open("C:\\Laptop\\GSOC\\openmrs\\generated_data\\insertScript.sql", 'w', "utf-8")
 
-while (i<1):
+while (i<numPatients):
     r += insertScript('person',patients[i],i+idStart)
     r += "\n"
     r += insertScript('person_name',patients[i],i+idStart)

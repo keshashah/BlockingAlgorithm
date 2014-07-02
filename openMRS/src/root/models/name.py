@@ -19,3 +19,10 @@ class Name:
         lst.append(self.familyName)
         lst.sort()
         return lst
+    
+    def getUnSortedNamesAsList(self):
+        lst = []
+        lst.append(self.givenName)
+        lst.append(self.middleName)
+        lst.append(self.familyName)
+        return lst

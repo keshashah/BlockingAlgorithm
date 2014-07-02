@@ -36,7 +36,7 @@ class Blocking:
     
     
     #[ B3, C3, Y2 ] First 3 characters of Names B and Name C and the last 2 digits of the year of birth (JUDWAW80)
-    def blockingScheme1(self,blockingPatients):
+    def SortedBlockingScheme1(self,blockingPatients):
         blockingColumn = {}
         for p in blockingPatients:
             b = p.sortedNameList[1]
@@ -48,7 +48,7 @@ class Blocking:
         return blockingColumn
     
     #[ B3, Blk-DB , Blk-MB ] First 3 characters of Name B, date and month of birth (JUD2703)
-    def blockingScheme2(self,blockingPatients):
+    def SortedBlockingScheme2(self,blockingPatients):
         blockingColumn = {}
         for p in blockingPatients:
             b = p.sortedNameList[1]
@@ -58,7 +58,7 @@ class Blocking:
         return blockingColumn
                 
     #[ C3, Blk-DB, Blk-MB ] First 3 characters of Name C, date and month of birth (WAW2703)
-    def blockingScheme3(self,blockingPatients):
+    def SortedBlockingScheme3(self,blockingPatients):
         blockingColumn = {}
         for p in blockingPatients:
             c = p.sortedNameList[2]
@@ -68,7 +68,7 @@ class Blocking:
         return blockingColumn
         
     #[ B1, YB, Blk-DB, Blk-MB ] First character of Name B and date of birth (J032780)
-    def blockingScheme4(self,blockingPatients):
+    def SortedBlockingScheme4(self,blockingPatients):
         blockingColumn = {}
         for p in blockingPatients:
             b = p.sortedNameList[1]
@@ -78,7 +78,7 @@ class Blocking:
         return blockingColumn
     
     #[ C1, YB, Blk-DB, Blk-MB ] First character of Name C and date of birth (W032780)
-    def blockingScheme5(self,blockingPatients):
+    def SortedBlockingScheme5(self,blockingPatients):
         blockingColumn = {}
         for p in blockingPatients:
             c = p.sortedNameList[2]
@@ -87,14 +87,68 @@ class Blocking:
             blockingColumn.update({str(p.uuid) : s.upper()})
         return blockingColumn
     
+    #Combination Schemes for unsorted names list 
     
-    def insertBlockingSchemeTable(self,schemeName,blockingColumn):
+    #[ B3, C3, Y2 ] First 3 characters of Names B and Name C and the last 2 digits of the year of birth (JUDWAW80)
+    def UnSortedBlockingScheme1(self,blockingPatients):
+        blockingColumn = {}
+        for p in blockingPatients:
+            b = p.UnSortedNameList[1]
+            c = p.UnSortedNameList[2]
+            b = b[0:3]
+            c = c[0:3]
+            s = b + c + p.yob
+            blockingColumn.update({str(p.uuid) : s.upper()})
+        return blockingColumn
+    
+    #[ B3, Blk-DB , Blk-MB ] First 3 characters of Name B, date and month of birth (JUD2703)
+    def UnSortedBlockingScheme2(self,blockingPatients):
+        blockingColumn = {}
+        for p in blockingPatients:
+            b = p.UnSortedNameList[1]
+            b = b[0:3]
+            s = b + p.dayob + p.mob
+            blockingColumn.update({str(p.uuid) : s.upper()})
+        return blockingColumn
+                
+    #[ C3, Blk-DB, Blk-MB ] First 3 characters of Name C, date and month of birth (WAW2703)
+    def UnSortedBlockingScheme3(self,blockingPatients):
+        blockingColumn = {}
+        for p in blockingPatients:
+            c = p.UnSortedNameList[2]
+            c = c[0:3]
+            s = c + p.dayob + p.mob
+            blockingColumn.update({str(p.uuid) : s.upper()})
+        return blockingColumn
+        
+    #[ B1, YB, Blk-DB, Blk-MB ] First character of Name B and date of birth (J032780)
+    def UnSortedBlockingScheme4(self,blockingPatients):
+        blockingColumn = {}
+        for p in blockingPatients:
+            b = p.UnSortedNameList[1]
+            b = b[0:1]
+            s = b + p.mob + p.dayob + p.yob
+            blockingColumn.update({str(p.uuid) : s.upper()})
+        return blockingColumn
+    
+    #[ C1, YB, Blk-DB, Blk-MB ] First character of Name C and date of birth (W032780)
+    def UnSortedBlockingScheme5(self,blockingPatients):
+        blockingColumn = {}
+        for p in blockingPatients:
+            c = p.UnSortedNameList[2]
+            c = c[0:1]
+            s = c + p.mob + p.dayob + p.yob
+            blockingColumn.update({str(p.uuid) : s.upper()})
+        return blockingColumn
+    
+    
+    def insertBlockingSchemeTable(self,schemeName,combination,blockingColumn):
         import pymysql
         conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='root', db='openmrs')  # else connect to default mysqldb
         cur = conn.cursor()
         
         for value in blockingColumn:
-            query = "REPLACE INTO blockingscheme (uuid,"+schemeName+") values('"+value+"','"+blockingColumn[value]+"')"
+            query = "REPLACE INTO blockingscheme (uuid,"+schemeName+",combination) values('"+value+"','"+blockingColumn[value]+"','"+combination+"')"
             cur.execute(query)
         
         conn.commit()    
@@ -103,7 +157,7 @@ class Blocking:
         return
     
     
-    def updateBlockingSchemeTable(self,schemeName,blockingColumn):
+    def updateBlockingSchemeTable(self,schemeName,combination, blockingColumn):
         import pymysql
         conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='root', db='openmrs')  # else connect to default mysqldb
         cur = conn.cursor()
@@ -116,7 +170,15 @@ class Blocking:
         cur.close()
         conn.close()
         return
-            
     
-    
+    def truncateBlockingSchemeTable(self):
+        import pymysql
+        conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='root', db='openmrs')  # else connect to default mysqldb
+        cur = conn.cursor()
+        query = "TRUNCATE table blockingscheme"
+        cur.execute(query)
+        conn.commit()    
+        cur.close()
+        conn.close()
+        return
     
